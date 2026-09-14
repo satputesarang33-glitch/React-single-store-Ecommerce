@@ -3,7 +3,7 @@ import dns from "node:dns";
 
 // Fix for Windows Node.js DNS resolution with MongoDB Atlas SRV URIs
 try {
-    dns.setServers(["8.8.8.8", "8.8.4.4"]);
+    dns.setServers(["1.1.1.1", "1.0.0.1", "8.8.8.8", "8.8.4.4"]);
 } catch (err) {
     console.warn("Could not set custom DNS servers:", err.message);
 }
