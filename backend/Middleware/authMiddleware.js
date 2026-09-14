@@ -19,8 +19,8 @@ export const verifyToken = async (req, res, next) => {
 
     const token = authHeader.split(' ')[1];
     
-    // Support testing tokens if in mock-compatibility mode
-    if (token === 'mock_customer_jwt_token' || token === 'mock_admin_jwt_token' || token === 'mock_google_jwt_token' || token === 'mock_new_user_jwt_token') {
+    // Support testing tokens if in development/test mock-compatibility mode
+    if (process.env.NODE_ENV !== 'production' && (token === 'mock_customer_jwt_token' || token === 'mock_admin_jwt_token' || token === 'mock_google_jwt_token' || token === 'mock_new_user_jwt_token')) {
       const role = token === 'mock_admin_jwt_token' ? 'admin' : 'customer';
       if (mongoose.connection.readyState === 1) {
         const dbUser = await User.findOne({ role }).select('-password');

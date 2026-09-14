@@ -17,12 +17,27 @@ import adminRoute from './Route/adminRoute.js';
 import { seedDatabase } from './Seed/seedData.js';
 import { notFoundHandler, errorHandler } from './Middleware/errorMiddleware.js';
 import { verifySmtpConnection } from './Service/emailService.js';
+import helmet from 'helmet';
+import { sanitizeNoSql } from './Middleware/sanitizeMiddleware.js';
+import { generalLimiter } from './Middleware/rateLimitMiddleware.js';
 
 // ── Initialize Environment Variables ──
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Security: Disable Express server fingerprinting
+app.disable('x-powered-by');
+
+// Security: HTTP headers via Helmet
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  contentSecurityPolicy: false
+}));
+
+// Security: General API rate limiting
+app.use('/api', generalLimiter);
 
 /**
  * ============================================================================
@@ -49,6 +64,9 @@ app.use(cors({
 app.use(express.json({ limit: '25mb' }));
 app.use(express.urlencoded({ limit: '25mb', extended: true }));
 app.use(cookieParser());
+
+// 4c. Sanitize inputs against MongoDB NoSQL operator injection
+app.use(sanitizeNoSql);
 
 /**
  * ============================================================================

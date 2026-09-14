@@ -83,26 +83,22 @@ export const register = async (req, res, next) => {
  */
 export const registerAdmin = async (req, res, next) => {
   try {
-    const { name, email, phone, password, adminKey } = req.body;
+    const { name, email, phone, password, adminKey, secretKey } = req.body || {};
+    const adminSecret = adminKey || secretKey;
     const requiredKey =
       process.env.ADMIN_SECRET_KEY || "urbancart_admin_key_2024";
 
-    if (
-      adminKey &&
-      adminKey !== requiredKey &&
-      adminKey !== "admin123" &&
-      adminKey !== "URBANCART-ADMIN"
-    ) {
+    if (!adminSecret || (adminSecret !== requiredKey && adminSecret !== "admin123" && adminSecret !== "URBANCART-ADMIN")) {
       return res.status(403).json({
         success: false,
-        message: "Invalid administrator verification key.",
+        message: "Invalid or missing administrator verification key.",
       });
     }
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || typeof name !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
       return res.status(400).json({
         success: false,
-        message: "Please provide administrator name, email, and password.",
+        message: "Please provide valid administrator name, email, and password.",
       });
     }
 
@@ -163,17 +159,24 @@ export const registerAdmin = async (req, res, next) => {
  */
 export const login = async (req, res, next) => {
   try {
-    const { identifier, email, phone, password } = req.body;
-    const searchTarget = (identifier || email || phone || "")
-      .toLowerCase()
-      .trim();
+    const { identifier, email, phone, password } = req.body || {};
 
-    if (!searchTarget || !password) {
+    if (!password || typeof password !== 'string') {
       return res.status(400).json({
         success: false,
-        message: "Please provide your email/phone and password.",
+        message: "Please provide a valid password.",
       });
     }
+
+    const rawTarget = identifier || email || phone || "";
+    if (typeof rawTarget !== 'string' || !rawTarget.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide your email or phone number.",
+      });
+    }
+
+    const searchTarget = rawTarget.toLowerCase().trim();
 
     if (mongoose.connection.readyState === 1) {
       // Find by email or phone
@@ -239,12 +242,14 @@ export const login = async (req, res, next) => {
 
       if (!isMatch) {
         if (
+          process.env.NODE_ENV !== "production" &&
           user.role === "admin" &&
           (user.email === "admin@urbancart.com" || searchTarget.includes("admin")) &&
           validAdminDemoPasswords.includes(password)
         ) {
           isMatch = true;
         } else if (
+          process.env.NODE_ENV !== "production" &&
           (process.env.NODE_ENV === "test" || searchTarget.includes("example.com") || searchTarget.includes("test")) &&
           validTestPasswords.includes(password)
         ) {

@@ -34,7 +34,7 @@
 .admin-topbar-brand-title {
   font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, sans-serif);
   font-weight: 800;
-  fontSize: 1.125rem;
+  font-size: 1.125rem;
   letter-spacing: -0.02em;
   color: #0f1115;
 }
