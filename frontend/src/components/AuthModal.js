@@ -93,6 +93,20 @@ export const AuthModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Resend state & 30s cooldown timer
+  const [isResending, setIsResending] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
+
+  React.useEffect(() => {
+    let timer;
+    if (resendCooldown > 0) {
+      timer = setInterval(() => {
+        setResendCooldown((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [resendCooldown]);
+
   // Sync mode when modal opens
   React.useEffect(() => {
     if (authModalMode === "admin") {
@@ -250,11 +264,33 @@ export const AuthModal = () => {
       });
       setRegVerifyingTarget(target);
       setRegStep(3);
+      setResendCooldown(30);
       showToast(res.message || `Code sent to ${target}`, "info");
     } catch (err) {
       setError(err.message || "Failed to send verification code.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Direct Resend for registration verification OTP
+  const handleResendRegOtp = async () => {
+    if (resendCooldown > 0 || isResending) return;
+    setError("");
+    const target = regVerifyingTarget || (regVerifyChannel === "email" ? custEmail.trim() : custPhone.trim());
+    if (!target) return;
+    setIsResending(true);
+    try {
+      const res = await sendVerificationCode({
+        type: regVerifyChannel,
+        target,
+      });
+      setResendCooldown(30);
+      showToast(res.message || `Verification code resent to ${target}!`, "success");
+    } catch (err) {
+      setError(err.message || "Failed to resend verification code.");
+    } finally {
+      setIsResending(false);
     }
   };
 
@@ -394,11 +430,32 @@ export const AuthModal = () => {
         target: verifyTarget,
       });
       setOtpStep(2);
+      setResendCooldown(30);
       showToast(res.message || `Code sent to ${verifyTarget}`, "info");
     } catch (err) {
       setError(err.message || "Failed to dispatch verification code.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Direct Resend for Verify Me and Forgot Password OTP
+  const handleResendGeneralOtp = async () => {
+    if (resendCooldown > 0 || isResending) return;
+    setError("");
+    if (!verifyTarget.trim()) return;
+    setIsResending(true);
+    try {
+      const res = await sendVerificationCode({
+        type: verifyChannel,
+        target: verifyTarget,
+      });
+      setResendCooldown(30);
+      showToast(res.message || `Verification code resent to ${verifyTarget}!`, "success");
+    } catch (err) {
+      setError(err.message || "Failed to resend verification code.");
+    } finally {
+      setIsResending(false);
     }
   };
 
@@ -1417,25 +1474,74 @@ export const AuthModal = () => {
                     Verify & Go to Sign In →
                   </Button>
 
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setRegStep(2);
-                      setRegOtpCode("");
-                      setError("");
-                    }}
+                  {/* Resend Email / SMS Code Option */}
+                  <div
                     style={{
-                      background: "none",
-                      border: "none",
-                      fontSize: "0.75rem",
-                      color: "#6b7280",
-                      fontWeight: 600,
-                      cursor: "pointer",
-                      textAlign: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "10px",
+                      marginTop: "4px",
+                      padding: "12px 14px",
+                      backgroundColor: "#f9fafb",
+                      borderRadius: "10px",
+                      border: "1px dashed #d1d5db",
                     }}
                   >
-                    Didn't receive? Resend code
-                  </button>
+                    <div style={{ fontSize: "0.78125rem", color: "#4b5563", textAlign: "center" }}>
+                      Didn't receive the verification code? Check spam or resend:
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", justifyContent: "center" }}>
+                      <button
+                        type="button"
+                        onClick={handleResendRegOtp}
+                        disabled={resendCooldown > 0 || isResending}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          backgroundColor: resendCooldown > 0 ? "#f3f4f6" : "#0f172a",
+                          color: resendCooldown > 0 ? "#9ca3af" : "#ffffff",
+                          border: resendCooldown > 0 ? "1px solid #e5e7eb" : "1px solid #0f172a",
+                          padding: "8px 16px",
+                          borderRadius: "8px",
+                          fontSize: "0.8125rem",
+                          fontWeight: 700,
+                          cursor: resendCooldown > 0 || isResending ? "not-allowed" : "pointer",
+                          transition: "all 0.18s ease",
+                        }}
+                      >
+                        <span>{regVerifyChannel === "email" ? "✉️" : "📱"}</span>
+                        <span>
+                          {isResending
+                            ? "Resending..."
+                            : resendCooldown > 0
+                              ? `Resend ${regVerifyChannel === "email" ? "Email" : "SMS"} in ${resendCooldown}s`
+                              : `Resend ${regVerifyChannel === "email" ? "Email" : "SMS"} Code`}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRegStep(2);
+                          setRegOtpCode("");
+                          setError("");
+                        }}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          fontSize: "0.75rem",
+                          color: "#4f46e5",
+                          fontWeight: 600,
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        Change {regVerifyChannel === "email" ? "email" : "mobile"}
+                      </button>
+                    </div>
+                  </div>
                 </form>
               )}
 
@@ -1819,6 +1925,75 @@ export const AuthModal = () => {
                   >
                     Verify Me
                   </Button>
+
+                  {/* Resend Email / SMS Code Option */}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "8px",
+                      marginTop: "6px",
+                      padding: "10px 12px",
+                      backgroundColor: "#f9fafb",
+                      borderRadius: "10px",
+                      border: "1px dashed #d1d5db",
+                    }}
+                  >
+                    <div style={{ fontSize: "0.75rem", color: "#4b5563" }}>
+                      Didn't receive the verification code?
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", justifyContent: "center" }}>
+                      <button
+                        type="button"
+                        onClick={handleResendGeneralOtp}
+                        disabled={resendCooldown > 0 || isResending}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          backgroundColor: resendCooldown > 0 ? "#f3f4f6" : "#0f172a",
+                          color: resendCooldown > 0 ? "#9ca3af" : "#ffffff",
+                          border: resendCooldown > 0 ? "1px solid #e5e7eb" : "1px solid #0f172a",
+                          padding: "6px 14px",
+                          borderRadius: "8px",
+                          fontSize: "0.8125rem",
+                          fontWeight: 700,
+                          cursor: resendCooldown > 0 || isResending ? "not-allowed" : "pointer",
+                          transition: "all 0.18s ease",
+                        }}
+                      >
+                        <span>{verifyChannel === "email" ? "✉️" : "📱"}</span>
+                        <span>
+                          {isResending
+                            ? "Resending..."
+                            : resendCooldown > 0
+                              ? `Resend ${verifyChannel === "email" ? "Email" : "SMS"} in ${resendCooldown}s`
+                              : `Resend ${verifyChannel === "email" ? "Email" : "SMS"} Code`}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setOtpStep(1);
+                          setOtpCode("");
+                          setError("");
+                        }}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          fontSize: "0.75rem",
+                          color: "#4f46e5",
+                          fontWeight: 600,
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        Change {verifyChannel === "email" ? "email" : "mobile"}
+                      </button>
+                    </div>
+                  </div>
                 </form>
               )}
 
@@ -2062,6 +2237,75 @@ export const AuthModal = () => {
                   >
                     Confirm Code
                   </Button>
+
+                  {/* Resend Email / SMS Code Option */}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "8px",
+                      marginTop: "6px",
+                      padding: "10px 12px",
+                      backgroundColor: "#f9fafb",
+                      borderRadius: "10px",
+                      border: "1px dashed #d1d5db",
+                    }}
+                  >
+                    <div style={{ fontSize: "0.75rem", color: "#4b5563" }}>
+                      Didn't receive the reset code?
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", justifyContent: "center" }}>
+                      <button
+                        type="button"
+                        onClick={handleResendGeneralOtp}
+                        disabled={resendCooldown > 0 || isResending}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          backgroundColor: resendCooldown > 0 ? "#f3f4f6" : "#0f172a",
+                          color: resendCooldown > 0 ? "#9ca3af" : "#ffffff",
+                          border: resendCooldown > 0 ? "1px solid #e5e7eb" : "1px solid #0f172a",
+                          padding: "6px 14px",
+                          borderRadius: "8px",
+                          fontSize: "0.8125rem",
+                          fontWeight: 700,
+                          cursor: resendCooldown > 0 || isResending ? "not-allowed" : "pointer",
+                          transition: "all 0.18s ease",
+                        }}
+                      >
+                        <span>{verifyChannel === "email" ? "✉️" : "📱"}</span>
+                        <span>
+                          {isResending
+                            ? "Resending..."
+                            : resendCooldown > 0
+                              ? `Resend ${verifyChannel === "email" ? "Email" : "SMS"} in ${resendCooldown}s`
+                              : `Resend ${verifyChannel === "email" ? "Email" : "SMS"} Reset Code`}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setOtpStep(1);
+                          setOtpCode("");
+                          setError("");
+                        }}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          fontSize: "0.75rem",
+                          color: "#4f46e5",
+                          fontWeight: 600,
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        Change {verifyChannel === "email" ? "email" : "mobile"}
+                      </button>
+                    </div>
+                  </div>
                 </form>
               )}
 
@@ -2846,6 +3090,75 @@ export const AuthModal = () => {
                   >
                     Verify Admin Identity
                   </Button>
+
+                  {/* Resend Admin Code Option */}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "8px",
+                      marginTop: "6px",
+                      padding: "10px 12px",
+                      backgroundColor: "#f9fafb",
+                      borderRadius: "10px",
+                      border: "1px dashed #d1d5db",
+                    }}
+                  >
+                    <div style={{ fontSize: "0.75rem", color: "#4b5563" }}>
+                      Didn't receive the admin verification token?
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", justifyContent: "center" }}>
+                      <button
+                        type="button"
+                        onClick={handleResendGeneralOtp}
+                        disabled={resendCooldown > 0 || isResending}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          backgroundColor: resendCooldown > 0 ? "#f3f4f6" : "#0f172a",
+                          color: resendCooldown > 0 ? "#9ca3af" : "#ffffff",
+                          border: resendCooldown > 0 ? "1px solid #e5e7eb" : "1px solid #0f172a",
+                          padding: "6px 14px",
+                          borderRadius: "8px",
+                          fontSize: "0.8125rem",
+                          fontWeight: 700,
+                          cursor: resendCooldown > 0 || isResending ? "not-allowed" : "pointer",
+                          transition: "all 0.18s ease",
+                        }}
+                      >
+                        <span>{verifyChannel === "email" ? "✉️" : "📱"}</span>
+                        <span>
+                          {isResending
+                            ? "Resending..."
+                            : resendCooldown > 0
+                              ? `Resend ${verifyChannel === "email" ? "Email" : "SMS"} in ${resendCooldown}s`
+                              : `Resend ${verifyChannel === "email" ? "Email" : "SMS"} Token`}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setOtpStep(1);
+                          setOtpCode("");
+                          setError("");
+                        }}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          fontSize: "0.75rem",
+                          color: "#4f46e5",
+                          fontWeight: 600,
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        Change {verifyChannel === "email" ? "email" : "mobile"}
+                      </button>
+                    </div>
+                  </div>
                 </form>
               )}
 
@@ -3080,6 +3393,75 @@ export const AuthModal = () => {
                   >
                     Confirm Admin Code
                   </Button>
+
+                  {/* Resend Admin Reset Code Option */}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "8px",
+                      marginTop: "6px",
+                      padding: "10px 12px",
+                      backgroundColor: "#f9fafb",
+                      borderRadius: "10px",
+                      border: "1px dashed #d1d5db",
+                    }}
+                  >
+                    <div style={{ fontSize: "0.75rem", color: "#4b5563" }}>
+                      Didn't receive the admin reset code?
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", justifyContent: "center" }}>
+                      <button
+                        type="button"
+                        onClick={handleResendGeneralOtp}
+                        disabled={resendCooldown > 0 || isResending}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          backgroundColor: resendCooldown > 0 ? "#f3f4f6" : "#0f172a",
+                          color: resendCooldown > 0 ? "#9ca3af" : "#ffffff",
+                          border: resendCooldown > 0 ? "1px solid #e5e7eb" : "1px solid #0f172a",
+                          padding: "6px 14px",
+                          borderRadius: "8px",
+                          fontSize: "0.8125rem",
+                          fontWeight: 700,
+                          cursor: resendCooldown > 0 || isResending ? "not-allowed" : "pointer",
+                          transition: "all 0.18s ease",
+                        }}
+                      >
+                        <span>{verifyChannel === "email" ? "✉️" : "📱"}</span>
+                        <span>
+                          {isResending
+                            ? "Resending..."
+                            : resendCooldown > 0
+                              ? `Resend ${verifyChannel === "email" ? "Email" : "SMS"} in ${resendCooldown}s`
+                              : `Resend ${verifyChannel === "email" ? "Email" : "SMS"} Reset Code`}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setOtpStep(1);
+                          setOtpCode("");
+                          setError("");
+                        }}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          fontSize: "0.75rem",
+                          color: "#4f46e5",
+                          fontWeight: 600,
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        Change {verifyChannel === "email" ? "email" : "mobile"}
+                      </button>
+                    </div>
+                  </div>
                 </form>
               )}
 

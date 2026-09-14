@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '../context/StoreContext';
 import { TopNoticeBar } from '../components/TopNoticeBar';
 import { StorefrontNav } from '../components/StorefrontNav';
@@ -52,11 +52,34 @@ export const OrderSuccessPage = () => {
     ]
   };
 
+  const [isResendingEmail, setIsResendingEmail] = useState(false);
+  const [emailCooldown, setEmailCooldown] = useState(0);
+
+  useEffect(() => {
+    let timer;
+    if (emailCooldown > 0) {
+      timer = setInterval(() => {
+        setEmailCooldown((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [emailCooldown]);
+
   const handleDownloadInvoice = () => {
     showToast('Generating official tax receipt PDF...', 'info');
     setTimeout(() => {
       showToast(`Receipt for ${latestOrder.reference} downloaded successfully`, 'success');
     }, 1000);
+  };
+
+  const handleResendOrderEmail = () => {
+    if (emailCooldown > 0 || isResendingEmail) return;
+    setIsResendingEmail(true);
+    setTimeout(() => {
+      setIsResendingEmail(false);
+      setEmailCooldown(30);
+      showToast(`Order receipt email resent to ${latestOrder.patron?.email || 'your email'}!`, 'success');
+    }, 700);
   };
 
   return (
@@ -108,6 +131,18 @@ export const OrderSuccessPage = () => {
               </Button>
               <Button variant="outline" size="md" icon={DownloadIcon} onClick={handleDownloadInvoice}>
                 Download Tax Invoice
+              </Button>
+              <Button
+                variant="outline"
+                size="md"
+                disabled={emailCooldown > 0 || isResendingEmail}
+                onClick={handleResendOrderEmail}
+              >
+                {isResendingEmail
+                  ? 'Resending...'
+                  : emailCooldown > 0
+                    ? `Resend Email in ${emailCooldown}s`
+                    : '✉️ Resend Receipt Email'}
               </Button>
             </div>
           </div>

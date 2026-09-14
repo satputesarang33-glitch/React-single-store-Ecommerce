@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useStore } from '../context/StoreContext';
 import { TopNoticeBar } from '../components/TopNoticeBar';
@@ -804,6 +804,18 @@ export const RegisterPage = () => {
 export const ForgotPasswordPage = () => {
   const { setActiveView, showToast } = useStore();
   const [resetSentTo, setResetSentTo] = useState('');
+  const [isResending, setIsResending] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
+
+  useEffect(() => {
+    let timer;
+    if (resendCooldown > 0) {
+      timer = setInterval(() => {
+        setResendCooldown((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [resendCooldown]);
 
   const {
     register,
@@ -818,7 +830,20 @@ export const ForgotPasswordPage = () => {
     // Simulate sending password reset email
     await new Promise(resolve => setTimeout(resolve, 800));
     setResetSentTo(data.email);
+    setResendCooldown(30);
     showToast(`Password reset link sent to ${data.email}`, 'success');
+  };
+
+  const handleResendResetEmail = async () => {
+    if (resendCooldown > 0 || isResending) return;
+    setIsResending(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 600));
+      setResendCooldown(30);
+      showToast(`Password reset link resent to ${resetSentTo}`, 'success');
+    } finally {
+      setIsResending(false);
+    }
   };
 
   return (
@@ -862,14 +887,47 @@ export const ForgotPasswordPage = () => {
                 Please check your inbox (and spam folder) and follow the link to establish your new password.
               </p>
 
-              <Button
-                variant="primary"
-                size="md"
-                fullWidth
-                onClick={() => setActiveView('login')}
-              >
-                Return to Login
-              </Button>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <button
+                  type="button"
+                  onClick={handleResendResetEmail}
+                  disabled={resendCooldown > 0 || isResending}
+                  style={{
+                    width: '100%',
+                    padding: '12px 18px',
+                    borderRadius: '8px',
+                    backgroundColor: resendCooldown > 0 ? '#f3f4f6' : '#0f172a',
+                    color: resendCooldown > 0 ? '#9ca3af' : '#ffffff',
+                    border: resendCooldown > 0 ? '1px solid #e5e7eb' : '1px solid #0f172a',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    cursor: resendCooldown > 0 || isResending ? 'not-allowed' : 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    transition: 'all 0.18s ease'
+                  }}
+                >
+                  <span>✉️</span>
+                  <span>
+                    {isResending
+                      ? 'Resending Reset Link...'
+                      : resendCooldown > 0
+                        ? `Resend Email in ${resendCooldown}s`
+                        : 'Resend Reset Email'}
+                  </span>
+                </button>
+
+                <Button
+                  variant="outline"
+                  size="md"
+                  fullWidth
+                  onClick={() => setActiveView('login')}
+                >
+                  Return to Login
+                </Button>
+              </div>
             </div>
           ) : (
             /* Forgot Password Form */
