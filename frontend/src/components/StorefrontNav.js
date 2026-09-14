@@ -273,20 +273,7 @@ export const StorefrontNav = () => {
             onClick={openWishlist}
             title={currentUser ? `Curated Wishlist (${wishlist.length} saved items)` : 'Sign in to access your Curated Wishlist'}
             aria-label={currentUser ? `Curated Wishlist (${wishlist.length} saved items)` : 'Sign in to access your Curated Wishlist'}
-            style={{
-              position: 'relative',
-              width: '38px',
-              height: '38px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: activeView === 'wishlist' ? '#e11d48' : '#4b5563',
-              backgroundColor: activeView === 'wishlist' ? '#fff1f2' : '#f5f5f4',
-              border: activeView === 'wishlist' ? '1px solid #fecdd3' : '1px solid #e7e5e4',
-              cursor: 'pointer',
-              transition: 'all 0.18s ease'
-            }}
+            className={`nav-wishlist-btn ${activeView === 'wishlist' ? 'active' : ''}`}
           >
             <HeartIcon size={18} filled={activeView === 'wishlist'} />
             {currentUser && wishlist.length > 0 && (

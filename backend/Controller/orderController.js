@@ -146,7 +146,7 @@ export const createOrder = async (req, res, next) => {
 export const updateOrderStatus = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { fulfillmentState } = req.body;
+    const fulfillmentState = req.body.fulfillmentState || req.body.status;
 
     if (!fulfillmentState) {
       return res.status(400).json({

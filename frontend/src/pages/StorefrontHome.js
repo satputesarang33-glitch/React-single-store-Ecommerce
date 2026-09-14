@@ -485,15 +485,16 @@ export const StorefrontHome = () => {
 
               <button
                 onClick={() => openShopCatalog('ALL')}
+                className="btn-secondary"
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  fontSize: '0.8125rem',
+                  padding: '8px 18px',
+                  fontSize: '0.875rem',
                   fontWeight: 700,
                   color: '#0f1115',
-                  cursor: 'pointer'
+                  borderColor: 'rgba(0, 0, 0, 0.15)',
+                  borderRadius: '10px'
                 }}
+                aria-label="View all product categories"
               >
                 <span>View All Categories</span>
                 <ArrowRightIcon size={15} />
@@ -855,13 +856,13 @@ export const StorefrontHome = () => {
                       </div>
 
                       {/* Stock Urgency Bar */}
-                      <div style={{ marginBottom: '16px', marginTop: 'auto' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#6b7280', marginBottom: '4px' }}>
-                          <span>Stock: {deal.stockLeft} left</span>
-                          <span style={{ color: '#dc2626', fontWeight: 700 }}>Almost gone</span>
+                      <div style={{ margin: '16px 0 18px 0', marginTop: 'auto' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: '#6b7280', marginBottom: '6px' }}>
+                          <span style={{ fontWeight: 600 }}>Stock: {deal.stockLeft} left</span>
+                          <span style={{ color: '#dc2626', fontWeight: 700, letterSpacing: '0.01em' }}>Almost gone</span>
                         </div>
-                        <div style={{ height: '5px', backgroundColor: '#e5e7eb', borderRadius: '3px', overflow: 'hidden' }}>
-                          <div style={{ width: `${Math.min(100, Math.max(15, (deal.stockLeft / 10) * 100))}%`, height: '100%', backgroundColor: '#dc2626', borderRadius: '3px' }} />
+                        <div style={{ height: '7px', backgroundColor: '#f3f4f6', borderRadius: '4px', overflow: 'hidden' }}>
+                          <div style={{ width: `${Math.min(100, Math.max(15, (deal.stockLeft / 10) * 100))}%`, height: '100%', backgroundColor: '#dc2626', borderRadius: '4px', transition: 'width 0.3s ease' }} />
                         </div>
                       </div>
                     </div>
@@ -1179,14 +1180,13 @@ export const StorefrontHome = () => {
                     alignItems: 'center',
                     gap: '6px',
                     fontSize: '0.75rem',
-                    fontWeight: 800,
-                    letterSpacing: '0.14em',
+                    fontWeight: 700,
+                    letterSpacing: '0.06em',
                     color: '#fbbf24',
-                    textTransform: 'uppercase',
                     marginBottom: '8px'
                   }}>
                     <span aria-hidden="true">✦</span>
-                    <span>JOIN THE ATELIER SOCIETY</span>
+                    <span>Join the Atelier Society</span>
                   </div>
                   <h3 style={{
                     fontFamily: 'var(--font-serif)',
@@ -1246,9 +1246,9 @@ export const StorefrontHome = () => {
                         width: '100%',
                         backgroundColor: 'rgba(255, 255, 255, 0.08)',
                         border: '1px solid rgba(255, 255, 255, 0.2)',
-                        borderRadius: '9999px',
-                        padding: '13px 20px',
-                        fontSize: '0.8125rem',
+                        borderRadius: '10px',
+                        padding: '13px 18px',
+                        fontSize: '0.875rem',
                         color: '#ffffff',
                         outline: 'none',
                         transition: 'all 0.2s ease',
@@ -1274,8 +1274,8 @@ export const StorefrontHome = () => {
                       color: '#0f1115',
                       border: 'none',
                       padding: '13px 28px',
-                      borderRadius: '9999px',
-                      fontSize: '0.8125rem',
+                      borderRadius: '10px',
+                      fontSize: '0.875rem',
                       fontWeight: 700,
                       letterSpacing: '0.02em',
                       cursor: 'pointer',

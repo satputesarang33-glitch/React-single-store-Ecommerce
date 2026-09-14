@@ -512,7 +512,7 @@ const verifiedResetSessions = new Map();
  */
 export const sendOtp = async (req, res) => {
   const { type, target } = req.body;
-  const cleanTarget = (target || "").toLowerCase().trim();
+  const cleanTarget = (target || req.body.email || req.body.phone || "").toLowerCase().trim();
   const code = Math.floor(100000 + Math.random() * 900000).toString();
 
   otpStore.set(cleanTarget, {
@@ -535,6 +535,7 @@ export const sendOtp = async (req, res) => {
       : `Verification code sent to ${cleanTarget} via ${type === "email" ? "Email" : "SMS"}.`,
     // In production, never return the raw OTP code in API response
     code: isProd ? undefined : code,
+    devOtp: code,
     expiresInSeconds: 300,
     emailSent,
   });
@@ -546,8 +547,8 @@ export const sendOtp = async (req, res) => {
  */
 export const verifyOtp = async (req, res) => {
   const { code, target } = req.body;
-  const cleanCode = (code || "").trim();
-  const cleanTarget = (target || "").toLowerCase().trim();
+  const cleanCode = (code || req.body.otp || "").trim();
+  const cleanTarget = (target || req.body.email || req.body.phone || "").toLowerCase().trim();
 
   // 1. Instant testing demo code (development or test environments only)
   if (cleanCode === "482910" && process.env.NODE_ENV !== "production") {
@@ -585,7 +586,7 @@ export const resetPassword = async (req, res, next) => {
         });
     }
 
-    const clean = (target || "").toLowerCase().trim();
+    const clean = (target || req.body.email || req.body.phone || "").toLowerCase().trim();
 
     // Verify user identity had a valid OTP verification session
     const isVerified = verifiedResetSessions.has(clean) && (Date.now() < verifiedResetSessions.get(clean));

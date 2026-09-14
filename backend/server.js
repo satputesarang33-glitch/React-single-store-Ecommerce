@@ -36,8 +36,10 @@ app.use(cors({
     'http://localhost:3005',
     'http://localhost:3000',
     'http://127.0.0.1:3005',
-    'http://127.0.0.1:3000'
-  ],
+    'http://127.0.0.1:3000',
+    'https://react-single-store-ecommerce.vercel.app',
+    process.env.CLIENT_URL
+  ].filter(Boolean),
   credentials: true, // Allow cookies and authorization headers
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
