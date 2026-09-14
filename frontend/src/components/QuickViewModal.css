@@ -1,0 +1,153 @@
+/* ==========================================================================
+   QuickViewModal.css — Dedicated Component Stylesheet
+   Component: QuickViewModal.js
+   Description: Clean 2-column modal layout for product quick preview, image gallery,
+                size/colorway selection, and direct add to bag.
+   ========================================================================== */
+
+.quickview-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  align-items: start;
+}
+
+/* ── Left Gallery ── */
+.quickview-hero-img-box {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: #f6f5f2;
+  border: 1px solid #e5e7eb;
+}
+
+.quickview-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.quickview-discount-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.quickview-thumbnails-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.quickview-thumb-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  transition: border-color 0.15s ease;
+}
+
+.quickview-thumb-btn.active {
+  border: 2px solid #0f1115;
+}
+
+.quickview-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Right Column: Details & Selectors ── */
+.quickview-details-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.quickview-title {
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.3;
+  margin: 2px 0 8px 0;
+}
+
+.quickview-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.quickview-price {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.quickview-compare-price {
+  font-size: 1rem;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.quickview-swatch-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  padding: 2px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.quickview-swatch-circle.selected {
+  border-color: #0f1115;
+  transform: scale(1.15);
+}
+
+.quickview-size-pill {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #e5e7eb;
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.quickview-size-pill.selected {
+  border-color: #0f1115;
+  background-color: #0f1115;
+  color: #ffffff;
+}
+
+/* ── Actions Row ── */
+.quickview-actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.quickview-add-bag-btn {
+  flex-grow: 1;
+}
+
+@media (max-width: 640px) {
+  .quickview-hero-img-box {
+    height: 280px;
+  }
+}

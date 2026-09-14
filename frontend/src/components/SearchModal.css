@@ -1,0 +1,162 @@
+/* ==========================================================================
+   SearchModal.css — Dedicated Component Stylesheet
+   Component: SearchModal.js
+   Description: Spotlight quick-search modal (⌘K / Ctrl+K) with live search
+                input, instant product filtering, keyboard tags, and quick-add.
+   ========================================================================== */
+
+/* ── Backdrop Overlay ── */
+.search-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 17, 21, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 130;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 80px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* ── Dialog Container ── */
+.search-modal-surface {
+  background-color: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 620px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Search Input Field Bar ── */
+.search-modal-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e5e0;
+}
+
+.search-modal-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: #111827;
+  font-family: inherit;
+  background: transparent;
+}
+
+.search-modal-clear-btn {
+  color: #9ca3af;
+  padding: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.search-modal-esc-badge {
+  font-size: 0.6875rem;
+  padding: 2px 8px;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  color: #6b7280;
+  font-weight: 700;
+}
+
+/* ── Results Container ── */
+.search-modal-results {
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 16px 20px;
+}
+
+.search-modal-section-title {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: #9ca3af;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* ── Result Item Row ── */
+.search-result-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.search-result-item:hover {
+  background-color: #f9fafb;
+}
+
+.search-result-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.search-result-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  background-color: #f3f4f6;
+}
+
+.search-result-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.search-result-meta {
+  font-size: 0.6875rem;
+  color: #6b7280;
+}
+
+.search-result-price {
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* ── Trending Tags ── */
+.search-trending-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.search-tag-chip {
+  padding: 6px 12px;
+  border-radius: 9999px;
+  background-color: #f4f4f2;
+  border: 1px solid #e7e5e0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.search-tag-chip:hover {
+  background-color: #0f1115;
+  color: #ffffff;
+  border-color: #0f1115;
+}

@@ -1,0 +1,329 @@
+/* ==========================================================================
+   StorefrontNav.css — Dedicated Component Stylesheet
+   Component: StorefrontNav.js
+   Description: Navigation header with sticky glassmorphism, responsive brand
+                logo, category links, search pill, account dropdown, wishlist
+                and cart counters.
+   ========================================================================== */
+
+/* ── Sticky Glass Header ── */
+.storefront-header {
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 16px -2px rgba(0, 0, 0, 0.03);
+}
+
+.storefront-nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  gap: 16px;
+}
+
+/* ── Brand Logo & Left Group ── */
+.storefront-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.storefront-hamburger-btn {
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #f4f4f2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: #111827;
+  border: none;
+  cursor: pointer;
+}
+
+.storefront-logo-link {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+}
+
+.storefront-logo-badge {
+  width: 36px;
+  height: 36px;
+  background-color: #0f1115;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9375rem;
+  letter-spacing: -0.02em;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(15, 17, 21, 0.25);
+}
+
+.storefront-logo-text {
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #0f1115;
+  line-height: 1.15;
+}
+
+/* ── Desktop Category Navigation ── */
+.desktop-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.storefront-nav-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #4b5563;
+  background-color: transparent;
+  padding: 8px 14px;
+  border-radius: 8px;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  letter-spacing: -0.01em;
+}
+
+.storefront-nav-link:hover {
+  color: #0f1115;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.storefront-nav-link.active {
+  font-weight: 700;
+  color: #0f1115;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* ── Right Actions Group ── */
+.storefront-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Search Input Pill ── */
+.search-input-pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #f4f4f2;
+  border-radius: 9999px;
+  padding: 6px 12px 6px 14px;
+  width: 310px;
+  border: 1px solid #e7e5e0;
+  transition: all 0.2s ease;
+}
+
+.search-input-pill:focus-within {
+  border-color: #0f1115;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(15, 17, 21, 0.08);
+}
+
+.search-input-field {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  font-size: 0.75rem;
+  color: #111827;
+  width: 100%;
+  min-width: 240px;
+  font-weight: 500;
+}
+
+.search-kbd-hint {
+  font-size: 0.625rem;
+  background-color: #ffffff;
+  padding: 2px 6px;
+  border-radius: 5px;
+  color: #4b5563;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.mobile-search-icon {
+  display: none;
+  padding: 8px;
+  border-radius: 9999px;
+  color: #4b5563;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* ── User Profile Dropdown ── */
+.nav-user-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 240px;
+  background-color: #ffffff;
+  border: 1px solid #e5e5e0;
+  border-radius: 14px;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.12);
+  padding: 8px;
+  z-index: 60;
+  animation: fadeIn 0.15s ease;
+}
+
+.nav-user-header {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  margin-bottom: 6px;
+}
+
+.nav-user-name {
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.nav-user-email {
+  font-size: 0.75rem;
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-user-tier {
+  font-size: 0.625rem;
+  color: #d97706;
+  font-weight: 800;
+  margin-top: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.nav-dropdown-item {
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.nav-dropdown-item:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.nav-dropdown-item.danger {
+  color: #e11d48;
+}
+
+.nav-dropdown-item.danger:hover {
+  background-color: #fff1f2;
+  color: #be123c;
+}
+
+/* ── Wishlist Badge Counter ── */
+.nav-wishlist-badge {
+  background-color: #e11d48;
+  color: #ffffff;
+  font-size: 0.625rem;
+  font-weight: 800;
+  min-width: 17px;
+  height: 17px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* ── Cart Action Pill Button ── */
+.nav-cart-btn {
+  background-color: #0f1115 !important;
+  color: #ffffff !important;
+  border-color: #0f1115 !important;
+  box-shadow: 0 2px 10px rgba(15, 17, 21, 0.22) !important;
+}
+
+.nav-cart-btn:hover {
+  background-color: #272a33 !important;
+  transform: translateY(-1px);
+}
+
+.nav-cart-badge {
+  background-color: #ffffff;
+  color: #0f1115;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.cart-pill-price {
+  font-weight: 700;
+  font-size: 0.8125rem;
+}
+
+.cart-pill-divider {
+  opacity: 0.35;
+  font-weight: 300;
+}
+
+/* ── Responsive Adaptations ── */
+@media (max-width: 900px) {
+  .desktop-nav-links {
+    display: none !important;
+  }
+  .storefront-hamburger-btn {
+    display: inline-flex !important;
+  }
+  .search-input-pill {
+    display: none !important;
+  }
+  .mobile-search-icon {
+    display: inline-flex !important;
+  }
+  .ops-shortcut-btn {
+    display: none !important;
+  }
+  .user-name-label {
+    display: none !important;
+  }
+  .cart-pill-price,
+  .cart-pill-divider {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .storefront-header .container {
+    height: 60px !important;
+    gap: 8px !important;
+  }
+}

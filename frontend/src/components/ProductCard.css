@@ -1,0 +1,274 @@
+/* ==========================================================================
+   ProductCard.css — Dedicated Component Stylesheet
+   Component: ProductCard.js
+   Description: Clean minimalist editorial style product card with hover zoom,
+                discreet badge, wishlist toggle, quick add-to-bag, and price display.
+   ========================================================================== */
+
+/* ── Card Container ── */
+.product-card-clean {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease;
+  cursor: pointer;
+  border: 1px solid #f0f0ed;
+}
+
+.product-card-clean:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -8px rgba(15, 17, 21, 0.08), 0 4px 12px rgba(0, 0, 0, 0.02);
+  border-color: #e2e2dd;
+}
+
+/* ── Product Image Wrap & Zoom Effect ── */
+.product-card-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #f7f7f5;
+  overflow: hidden;
+}
+
+.product-card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card-clean:hover .product-card-image {
+  transform: scale(1.04);
+}
+
+/* ── Minimalist Badges (Discount % / New / Bestseller) ── */
+.product-card-badge-minimal {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #111827;
+  color: #ffffff;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 3px 7px;
+  border-radius: 4px;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-card-badge-tag {
+  background-color: #ffffff;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  font-size: 0.5625rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Wishlist Heart Button ── */
+.product-card-wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.product-card-wishlist-btn:hover {
+  transform: scale(1.1);
+  background-color: #ffffff;
+}
+
+/* ── Hover Action Bar (Quick Add & Quick View) ── */
+.product-card-hover-actions {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.product-card-clean:hover .product-card-hover-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-card-quick-add-btn {
+  flex: 1;
+  background-color: #111827;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 9px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.15s ease;
+}
+
+.product-card-quick-add-btn:hover {
+  background-color: #000000;
+}
+
+.product-card-quick-view-btn {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #111827;
+  padding: 9px 11px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.product-card-quick-view-btn:hover {
+  background-color: #ffffff;
+}
+
+/* ── Card Content Details ── */
+.product-card-details {
+  padding: 12px 14px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-grow: 1;
+}
+
+.product-card-category {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  color: #4b5563;
+}
+
+.product-card-title {
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #111827;
+  line-height: 1.35;
+  margin: 1px 0 3px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-card-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.product-card-price-group {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.product-card-price {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.product-card-compare-price {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  text-decoration: line-through;
+}
+
+.product-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.6875rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ── Mobile Responsive Optimizations (< 580px) ── */
+@media (max-width: 580px) {
+  .product-card-details {
+    padding: 10px 10px 12px 10px !important;
+  }
+  .product-card-title {
+    font-size: 0.8125rem !important;
+  }
+  .product-card-price {
+    font-size: 0.875rem !important;
+  }
+  .product-card-compare-price {
+    font-size: 0.75rem !important;
+  }
+  .product-card-badge-minimal {
+    font-size: 0.625rem !important;
+    padding: 2px 6px !important;
+    top: 6px !important;
+    left: 6px !important;
+  }
+  .product-card-wishlist-btn {
+    width: 28px !important;
+    height: 28px !important;
+    top: 6px !important;
+    right: 6px !important;
+  }
+}
+
+/* ── Touchscreens without hover ── */
+@media (hover: none) and (pointer: coarse) {
+  .product-card-hover-actions {
+    opacity: 0.96 !important;
+    transform: translateY(0) !important;
+    bottom: 6px !important;
+    left: 6px !important;
+    right: 6px !important;
+  }
+  .product-card-quick-add-btn {
+    padding: 7px 10px !important;
+    font-size: 0.6875rem !important;
+  }
+  .product-card-quick-view-btn {
+    padding: 7px 8px !important;
+  }
+}

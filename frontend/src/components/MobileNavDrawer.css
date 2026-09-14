@@ -1,0 +1,86 @@
+/* ==========================================================================
+   MobileNavDrawer.css — Dedicated Component Stylesheet
+   Component: MobileNavDrawer.js
+   Description: Slide-out mobile navigation drawer with quick search trigger,
+                curated categories, currency toggle, and account auth options.
+   ========================================================================== */
+
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 17, 21, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 120;
+  display: flex;
+  animation: fadeIn 0.2s ease;
+}
+
+.mobile-nav-surface {
+  width: 85%;
+  max-width: 340px;
+  height: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  animation: slideInLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+
+.mobile-nav-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e5e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-nav-search-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f4f4f2;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #6b7280;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+}
+
+.mobile-nav-links-container {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  gap: 4px;
+}
+
+.mobile-nav-item-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.mobile-nav-item-btn:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.mobile-nav-footer {
+  margin-top: auto;
+  padding: 20px;
+  border-top: 1px solid #e5e5e0;
+  background-color: #fafaf9;
+}

@@ -1,0 +1,89 @@
+/* ==========================================================================
+   AdminSidebar.css — Dedicated Component Stylesheet
+   Component: AdminSidebar.js
+   Description: OPS Backoffice admin navigation sidebar with icon menu,
+                active indicators, storefront shortcut, and engine status badge.
+   ========================================================================== */
+
+.admin-sidebar {
+  width: 240px;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e5e0;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 16px;
+}
+
+.admin-sidebar-section-title {
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  padding: 0 12px 12px 12px;
+}
+
+.admin-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-sidebar-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  background-color: transparent;
+  color: #4b5563;
+  text-align: left;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.admin-sidebar-btn:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.admin-sidebar-btn.active {
+  font-weight: 700;
+  background-color: #0f1115;
+  color: #ffffff;
+}
+
+.admin-sidebar-return-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background-color: #fafaf9;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #111827;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.admin-sidebar-return-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.admin-sidebar-status-card {
+  padding: 12px;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+}

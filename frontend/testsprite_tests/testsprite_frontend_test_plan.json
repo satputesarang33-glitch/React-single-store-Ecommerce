@@ -1,0 +1,1268 @@
+[
+  {
+    "id": "TC001",
+    "title": "Complete checkout and reach the order confirmation page",
+    "description": "This verifies that an authenticated customer can complete the protected checkout flow and land on the order success page.",
+    "category": "Cart and Checkout",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /cart"
+      },
+      {
+        "type": "action",
+        "description": "Proceed to checkout"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the shipping destination details"
+      },
+      {
+        "type": "action",
+        "description": "Select a delivery method"
+      },
+      {
+        "type": "action",
+        "description": "Select a payment method"
+      },
+      {
+        "type": "action",
+        "description": "Place the order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order confirmation page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a confirmation reference and delivery timeline are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Authenticated shopper completes checkout",
+    "description": "This verifies that a logged-in customer can enter shipping, delivery, and payment details and place an order successfully.",
+    "category": "Multi-Step Checkout & Order Placement",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the checkout entry point"
+      },
+      {
+        "type": "action",
+        "description": "Enter shipping address details"
+      },
+      {
+        "type": "action",
+        "description": "Select a delivery courier method"
+      },
+      {
+        "type": "action",
+        "description": "Select a payment method"
+      },
+      {
+        "type": "action",
+        "description": "Review the order summary"
+      },
+      {
+        "type": "action",
+        "description": "Authorize the order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order success confirmation is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Inspect a product in the 3D studio and add it to the cart",
+    "description": "This verifies that a shopper can review a product detail page, use the 3D studio, choose options, and add the item to the cart.",
+    "category": "3D Product Detail Inspection",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /product/1"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product gallery, details, and interactive 3D studio are displayed"
+      },
+      {
+        "type": "action",
+        "description": "Select a colorway"
+      },
+      {
+        "type": "action",
+        "description": "Select a size"
+      },
+      {
+        "type": "action",
+        "description": "Add the item to the cart"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the item is added to the cart"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Customer signs in successfully",
+    "description": "This verifies that a returning customer can sign in and reach the authenticated storefront state.",
+    "category": "Customer Authentication & Password Reset",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the authenticated state is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Check cart totals and apply a promo code",
+    "description": "This verifies that a shopper can review cart totals, apply a promo code, and see the pricing recalculate.",
+    "category": "Cart and Checkout",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /cart"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify cart items and order totals are displayed"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the promo code field with a valid promo code"
+      },
+      {
+        "type": "action",
+        "description": "Apply the promo code"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order totals are recalculated"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Remove a cart item and continue to checkout",
+    "description": "This verifies that a shopper can remove an item from the cart and proceed toward checkout with the updated cart contents.",
+    "category": "Shopping Cart & Promo Codes",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /cart"
+      },
+      {
+        "type": "action",
+        "description": "Remove an item from the cart"
+      },
+      {
+        "type": "action",
+        "description": "Continue to checkout"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the cart reflects the removal before checkout"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Blocked checkout requires shipping and payment details",
+    "description": "This verifies that checkout validation prevents order submission until the required shipping and payment details are provided.",
+    "category": "Cart and Checkout",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /cart"
+      },
+      {
+        "type": "action",
+        "description": "Proceed to checkout"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to place the order without completing the required checkout details"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify checkout validation errors are visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order is not placed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Review cart totals and update quantity",
+    "description": "This verifies that a shopper can inspect cart contents, change an item quantity, and see the order total update accordingly.",
+    "category": "Shopping Cart & Promo Codes",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /cart"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify cart items and totals are displayed"
+      },
+      {
+        "type": "action",
+        "description": "Increase an item quantity"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the cart total updates"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Search, filter, sort, and open a product from the catalog",
+    "description": "This verifies that a shopper can narrow catalog results using search, category, price, and sorting controls before opening a product detail page.",
+    "category": "Catalog Search & Multi-Attribute Filtering",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /shop"
+      },
+      {
+        "type": "action",
+        "description": "Select a category filter"
+      },
+      {
+        "type": "action",
+        "description": "Adjust the maximum price range"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the catalog search field with a relevant keyword"
+      },
+      {
+        "type": "action",
+        "description": "Select a sort option"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the catalog results are narrowed"
+      },
+      {
+        "type": "action",
+        "description": "Click a product card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product detail page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Checkout prevents submission without required details",
+    "description": "This verifies that checkout validation blocks progression until required shipping and payment information is completed.",
+    "category": "Multi-Step Checkout & Order Placement",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the checkout entry point"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to continue without entering the required shipping details"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to continue without selecting a payment method"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify validation prompts are visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order cannot be submitted"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Update an order fulfillment status",
+    "description": "This verifies that an authenticated admin can change an order's fulfillment status and see the updated status reflected in the dashboard.",
+    "category": "Backoffice Admin Console",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the login field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the orders section"
+      },
+      {
+        "type": "action",
+        "description": "Select a new fulfillment status for an order"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the status update"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order status is updated"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated status is visible in the order list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Sign in to access the account page",
+    "description": "This verifies that an authenticated customer can log in and reach the protected account area.",
+    "category": "Account Access",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /account"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the account page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Apply a promo code to the cart",
+    "description": "This verifies that a shopper can apply the URBAN20 promo code and see the discount reflected in the final order total.",
+    "category": "Shopping Cart & Promo Codes",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /cart"
+      },
+      {
+        "type": "action",
+        "description": "Enter the promo code URBAN20"
+      },
+      {
+        "type": "action",
+        "description": "Apply the promo code"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a discount is reflected in the order total"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Browse homepage promotions and open a curated category",
+    "description": "This verifies that a shopper can discover the homepage editorial content and move into a curated category listing from the homepage.",
+    "category": "Homepage Discovery & Promotions",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the homepage promotion, category showcase, best sellers, new arrivals, and flash deal content are displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click a category entry from the homepage showcase"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a filtered catalog view is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "Review admin dashboard metrics and operational sections",
+    "description": "This verifies that an authenticated admin can open the backoffice dashboard, review KPI summaries, and switch between operational sections successfully.",
+    "category": "Backoffice Admin Console",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the login field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the dashboard overview section"
+      },
+      {
+        "type": "action",
+        "description": "Click the orders section"
+      },
+      {
+        "type": "action",
+        "description": "Click the inventory section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify KPI cards are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify operational section content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "New customer creates an account",
+    "description": "This verifies that a shopper can register a new account and complete the signup flow successfully.",
+    "category": "Customer Authentication & Password Reset",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /register"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the name field with a valid full name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with a valid email address"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the phone field with a valid mobile number"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with a valid password"
+      },
+      {
+        "type": "action",
+        "description": "Submit the registration form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify account creation completion is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC017",
+    "title": "Review the admin dashboard KPIs and orders",
+    "description": "This verifies that an authenticated admin can log in and inspect the backoffice dashboard metrics and order management area.",
+    "category": "Admin Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the admin login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the admin dashboard KPIs and orders are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC018",
+    "title": "Switch storefront currency and see prices update",
+    "description": "This verifies that a shopper can change the storefront currency and see displayed prices update immediately across the page.",
+    "category": "Multi-Currency Live Conversion",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the currency selector"
+      },
+      {
+        "type": "action",
+        "description": "Select a different currency"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify displayed prices update across the storefront"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC019",
+    "title": "View order history and shipment progress",
+    "description": "This verifies that an authenticated customer can open the orders page and review shipment progress for past purchases.",
+    "category": "Order History & Tracking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify order history and shipment progress are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC020",
+    "title": "Create a new product in the admin editor",
+    "description": "This verifies that an authenticated admin can add a complete product through the editor and see it appear in the catalog management view.",
+    "category": "Backoffice Admin Console",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the login field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open the product editor"
+      },
+      {
+        "type": "action",
+        "description": "Fill in valid values for all product attributes"
+      },
+      {
+        "type": "action",
+        "description": "Submit the product form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new product is saved"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product appears in the catalog management view"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC021",
+    "title": "Switch cart currency and see totals recalculate",
+    "description": "This verifies that a shopper can change the cart currency and see cart totals recalculate in the selected currency.",
+    "category": "Multi-Currency Live Conversion",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /cart"
+      },
+      {
+        "type": "action",
+        "description": "Open the currency selector"
+      },
+      {
+        "type": "action",
+        "description": "Select a different currency"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify cart totals recalculate in the selected currency"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC022",
+    "title": "Customer resets password with OTP",
+    "description": "This verifies that a customer can complete the password reset flow using a verification code and set a new password.",
+    "category": "Customer Authentication & Password Reset",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /forgot-password"
+      },
+      {
+        "type": "action",
+        "description": "Request a verification code"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the verification code field with a valid 6-digit OTP"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the new password field with a valid password"
+      },
+      {
+        "type": "action",
+        "description": "Submit the password reset form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify password reset completion is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC023",
+    "title": "Open an order to view itemized details and receipt options",
+    "description": "This verifies that an authenticated customer can open an order detail view and inspect its itemized contents and receipt information.",
+    "category": "Order History & Tracking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "action",
+        "description": "Open an order from the history list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the itemized order details and receipt options are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC024",
+    "title": "Move a saved item into the cart",
+    "description": "This verifies that a shopper can add a wishlist item to the cart and see it reflected in their shopping cart.",
+    "category": "Wishlist Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /wishlist"
+      },
+      {
+        "type": "action",
+        "description": "Add a saved item to the cart"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the item appears in the cart"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC025",
+    "title": "Update an order status in the admin console",
+    "description": "This verifies that an authenticated admin can change the fulfillment status of an order from the dashboard.",
+    "category": "Admin Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the admin login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin"
+      },
+      {
+        "type": "action",
+        "description": "Update an order status"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated order status is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC026",
+    "title": "Refine a category page with search and price controls",
+    "description": "This verifies that a shopper can refine an already filtered category listing using the catalog controls.",
+    "category": "Catalog Search & Multi-Attribute Filtering",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /category/womens"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the catalog search field with a relevant keyword"
+      },
+      {
+        "type": "action",
+        "description": "Adjust the maximum price range"
+      },
+      {
+        "type": "action",
+        "description": "Select a sort option"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the category results are narrowed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC027",
+    "title": "Customer reviews order history and details",
+    "description": "This verifies that a logged-in customer can open order history and inspect a specific order's shipment and itemized details.",
+    "category": "Order Confirmation & Tracking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view order history"
+      },
+      {
+        "type": "action",
+        "description": "Open an order detail entry"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify shipment progress information is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify itemized order details and courier information are visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC028",
+    "title": "Manage saved items and move a wishlist item to the cart",
+    "description": "This verifies that a shopper can review saved items, remove an item, and move a selected wishlist item into the cart.",
+    "category": "Wishlist Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /wishlist"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify saved items are displayed"
+      },
+      {
+        "type": "action",
+        "description": "Remove one saved item"
+      },
+      {
+        "type": "action",
+        "description": "Add one saved item to the cart"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated wishlist state and cart action outcome are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC029",
+    "title": "View and compare saved items in the wishlist",
+    "description": "This verifies that a shopper can open the wishlist, review saved items with price comparisons, and continue browsing from the same page.",
+    "category": "Wishlist Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /wishlist"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify saved items are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify price comparison information is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC030",
+    "title": "Create or edit a product in the admin editor",
+    "description": "This verifies that an authenticated admin can open the product editor, complete the product fields, and save catalog changes.",
+    "category": "Admin Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the admin login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/editor"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the product editor fields with valid product details"
+      },
+      {
+        "type": "action",
+        "description": "Save the product"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the saved product is displayed in the editor"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC031",
+    "title": "Customer reviews the order confirmation page",
+    "description": "This verifies that a shopper can review the order success page after placement and see receipt access and delivery information.",
+    "category": "Order Confirmation & Tracking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /order-success"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order reference details are visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the delivery timeline and receipt access are visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC032",
+    "title": "Review product details and customer reviews",
+    "description": "This verifies that a shopper can inspect the product information and customer review content on the product detail page.",
+    "category": "3D Product Detail Inspection",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /product/1"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the materials, provenance, and specifications are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify customer reviews are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC033",
+    "title": "View customer and inventory management information",
+    "description": "This verifies that an authenticated admin can access customer directory and inventory information needed for store operations.",
+    "category": "Backoffice Admin Console",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the login field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the customers section"
+      },
+      {
+        "type": "action",
+        "description": "Click the inventory section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify customer directory content is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify inventory information is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC034",
+    "title": "View the seasonal promotion and countdown on the homepage",
+    "description": "This verifies that a shopper can see the homepage promotional code area and the flash deal countdown content together.",
+    "category": "Homepage Discovery & Promotions",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the seasonal promotion content is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the flash deal countdown is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC035",
+    "title": "Remove a saved item from the wishlist",
+    "description": "This verifies that a shopper can remove an unwanted item from the wishlist and see the list update.",
+    "category": "Wishlist Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /wishlist"
+      },
+      {
+        "type": "action",
+        "description": "Remove a saved item from the list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the wishlist updates without the removed item"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC036",
+    "title": "Submit a product review and see it appear on the product page",
+    "description": "This verifies that a shopper can write a review on the product detail page and see it reflected in the reviews section afterward.",
+    "category": "3D Product Detail Inspection",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /product/1"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the review form with a review title"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the review form with a review body"
+      },
+      {
+        "type": "action",
+        "description": "Submit the review"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the posted review is visible in the reviews section"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC037",
+    "title": "Subscribe to the newsletter from the homepage",
+    "description": "This verifies that a shopper can submit the homepage newsletter form and see a confirmation state afterward.",
+    "category": "Homepage Discovery & Promotions",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the newsletter email field with a valid email address"
+      },
+      {
+        "type": "action",
+        "description": "Submit the newsletter form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a subscription confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC038",
+    "title": "Validate required product fields before publishing",
+    "description": "This verifies that the admin editor prevents publishing when required product attributes are incomplete and shows validation feedback.",
+    "category": "Backoffice Admin Console",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the login field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open the product editor"
+      },
+      {
+        "type": "action",
+        "description": "Submit the product form without filling required fields"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify validation errors are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product is not saved"
+      }
+    ],
+    "priority": "Medium"
+  }
+]

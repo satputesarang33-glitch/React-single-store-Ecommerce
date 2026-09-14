@@ -1,0 +1,41 @@
+/* ==========================================================================
+   Toast.css — Dedicated Component Stylesheet
+   Component: Toast.js
+   Description: Floating notification toast for user confirmations, alerts,
+                and state feedback.
+   ========================================================================== */
+
+.toast-container {
+  position: fixed;
+  top: 84px;
+  right: 24px;
+  z-index: 110;
+  background-color: #0f1115;
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  animation: fadeIn 0.25s ease;
+}
+
+.toast-icon-success {
+  color: #10b981;
+  display: flex;
+  align-items: center;
+}
+
+.toast-icon-warning {
+  color: #d97706;
+  display: flex;
+  align-items: center;
+}
+
+.toast-message {
+  line-height: 1.4;
+}
